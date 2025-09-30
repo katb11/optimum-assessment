@@ -1,0 +1,41 @@
+1. Web Application Development
+
+Assumptions:
+	- sequence of reads do not matter
+	- db is available (I removed the datasource credentials)
+
+
+2. WebSocket Server and Client
+
+Assumptions:
+
+
+3. PL/SQL Procedure and Schedular Job
+
+Assumptions:
+
+	- a user may punch in and out at particular times and stored as timestamps
+	- this can occur multiple times in a single day
+	- a week will be defined as Monday through Sunday
+	- after calculating, we will round up to the nearest tenth of an hour
+	- no employee will be working overnight from sunday into monday the next week*
+		*this is a bad assumption and needs to be patched
+
+	
+4. Database Design for E-commerce
+
+Assumptions:
+
+	- There is a wide variety of items (creates a need for categories)
+	- Items can be in-stock, out-of-stock, or retired
+	- U.S. only for simplicity
+	- max price of an item is 9,999.99
+	- max order total is 999,999.99
+
+	
+5. Multithreaded Java Application
+
+Assumptions:
+	
+	
+

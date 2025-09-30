@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WebSocket Client</title>
+	</head>
+	<body>
+		<h2>WebSocket Chat</h2>
+
+		<input type="text" id="textBox" placeholder="Type here" />
+		<button onclick="sendMessage()">Send to WS Server</button>
+
+		<div id="connectionStatus"></div>
+		<hr/>
+		<ul id="messages"></ul>
+
+		<script>
+			let socket;
+
+			function connect() 
+			{
+				// Create WebSocket connection.
+				socket = new WebSocket("ws://127.0.0.1:8080/ws");
+
+				// Connection opened
+				socket.onopen = function(event) 
+				{
+					console.log("Connected to WebSocket");
+					logMessage("Connected to server.", "connectionStatus");
+				};
+
+				// Listen for messages
+				socket.onmessage = function(event) 
+				{
+					console.log("Message from server ", event.data);
+					logMessage("Server: " +event.data, "messages");
+				};
+
+				// Handle errors
+				socket.onerror = function(error) 
+				{
+					console.error("WebSocket error:", error);
+					logMessage("Error: " + error.message, "connectionStatus");
+				};
+
+				// Handle close
+				socket.onclose = function(event) 
+				{
+					logMessage("Disconnected from server.", "connectionStatus");
+				};
+			}
+
+			function sendMessage() 
+			{
+				const input = document.getElementById("textBox");
+				const message = input.value;
+
+				if (socket && socket.readyState === WebSocket.OPEN) 
+				{
+					socket.send(message);
+					logMessage("Client: " + message, "messages");
+					input.value = "";
+				} else 
+				{
+					console.log("WebSocket is not connected.");
+				}
+			}
+
+			function logMessage(message, id) 
+			{
+				const log = document.getElementById(id);
+				const li = document.createElement("li");
+				li.textContent = message;
+				log.appendChild(li);
+			}
+
+			connect();
+		</script>
+	</body>
+</html>
